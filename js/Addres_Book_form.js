@@ -171,4 +171,4 @@ window.addEventListener("DOMContentLoaded", (event) => {
   const getInputValueById = (property) => {
     let value = document.querySelector(property).value;
     return value;
-  }
+  };
