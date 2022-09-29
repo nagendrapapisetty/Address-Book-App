@@ -70,6 +70,27 @@ window.addEventListener("DOMContentLoaded", (event) => {
   };
   
   const save = () => {
+    try {
+      let contact = createContact();
+      createAndUpdateStorage(contact);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  
+  const createAndUpdateStorage = (contact) => {
+    let contactList = JSON.parse(localStorage.getItem("ContactList"));
+    if (contactList != undefined) {
+      contactList.push(contact);
+    } else {
+      contactList = [contact];
+    }
+    alert(contact.toString());
+    alert("Contact Added Sucessfully");
+    localStorage.setItem("ContactList", JSON.stringify(contactList));
+  }
+  
+  const createContact = () => {
     let contact = new Contact();
     contact.id = new Date().getTime();
   
@@ -93,7 +114,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
       setTextValue(".address-error", error);
       throw error;
     }
-    
+  
     let city = getInputValueById("#city");
     if (city != "Select City") {
       contact.city = city;
@@ -116,7 +137,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
     }
   
     alert(contact.toString());
-  };
+    return contact;
+  }
   
   const setTextValue = (id, value) => {
     const element = document.querySelector(id);
